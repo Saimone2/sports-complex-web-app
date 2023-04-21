@@ -1,6 +1,6 @@
 package com.saimone.SportsComplexApplication.repositories;
 
-import com.saimone.SportsComplexApplication.models.CardSets
+import com.saimone.SportsComplexApplication.models.CardSets;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
