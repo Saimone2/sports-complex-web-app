@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Update</title>
+</head>
+<body>
+<h2>Зміна інформації про відвідувача</h2>
+<form th:action="@{/customer-update/{id}(id=${customer.id})}" th:object="${customer}" method="post">
+  <label for="customer">ID</label>
+  <input type="text" th:field="${customer.id}" id="customer" placeholder="ID" readonly><br>
+  <br><br>
+  <label for="lastName">*Прізвище</label>
+  <input type="text" th:field="*{lastName}" id="lastName" placeholder="Прізвище"><br>
+  <span style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name error</span>
+  <br/><br/>
+  <label for="firstName">*Ім'я</label>
+  <input type="text" th:field="*{firstName}" id="firstName" placeholder="Ім'я"><br>
+  <span style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name error</span>
+  <br><br>
+  <label for="address">Адреса</label>
+  <input type="text" th:field="*{address}" id="address" placeholder="Адреса"><br>
+  <span style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address error</span>
+  <br><br>
+  <label for="email">*Email</label>
+  <input type="text" th:field="*{email}" id="email" placeholder="Email"><br>
+  <span style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</span>
+  <br><br>
+  <input type="submit" value="Змінити інформацію">
+</form>
+</body>
+</html>

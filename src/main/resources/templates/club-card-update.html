@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Club Card Update</title>
+</head>
+<body>
+<h2>Зміна інформації про клубну картку</h2>
+<form th:action="@{/club-card-update/{id}(id=${clubCard.id})}" th:object="${clubCard}" method="post">
+    <label for="id">ID</label>
+    <input readonly type="number" th:field="${clubCard.id}" id="id" placeholder="ID">
+    <br/><br/>
+
+    <label for="customerId">*Відвідувач:</label>
+    <select id="customerId" name="customerId">
+        <option th:value="${clubCard.customer.id}" th:text="${clubCard.customer.id + '. ' + clubCard.customer.lastName + ' ' + clubCard.customer.firstName}"></option>
+        <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.id + '. ' + customer.lastName + ' ' + customer.firstName}"></option>
+    </select>
+    <br/><br/>
+
+    <label for="issueDate">*Дата створення</label>
+    <input type="text" th:field="${clubCard.issueDate}" id="issueDate" placeholder="Дата створення">
+    <br/><br/>
+
+    <label for="expireDate">Дата закінчення</label>
+    <input type="text" th:field="${clubCard.expireDate}" id="expireDate" placeholder="Дата закінчення">
+    <br/><br/>
+
+    <label for="attendanceModeId">*Режим відвідування:</label>
+    <select id="attendanceModeId" name="attendanceModeId">
+        <option th:value="${clubCard.attendanceMode.id}" th:text="${clubCard.attendanceMode.name}"></option>
+        <option th:each="mode : ${modes}" th:value="${mode.id}" th:text="${mode.name}"></option>
+    </select>
+    <br/><br/>
+
+    <div>*Послуги:</div>
+    <label>
+        <input type="checkbox" id="pool" name="pool" th:checked="${pool}">
+        Басейн
+    </label>
+    <br>
+    <label>
+        <input type="checkbox" id="fitness" name="fitness" th:checked="${fitness}">
+        Фітнес зал
+    </label>
+    <br>
+    <label>
+        <input type="checkbox" id="gym" name="gym" th:checked="${gym}">
+        Спорт зал
+    </label>
+    <br>
+    <label>
+        <input type="checkbox" id="massage" name="massage" th:checked="${massage}">
+        Масаж
+    </label>
+    <br>
+    <label>
+        <input type="checkbox" id="sauna" name="sauna" th:checked="${sauna}">
+        Сауна
+    </label>
+    <br><br>
+
+    <input type="submit" value="Оновити інформацію">
+</form>
+</body>
+</html>

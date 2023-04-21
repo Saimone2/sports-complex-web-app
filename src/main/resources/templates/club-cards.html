@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Club Card Menu</title>
+    <style>
+        th, td {
+            border: 1px solid green;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<button style="font-size: 18px; margin: 10px 0 0 10px"><a href="/customers" style="text-decoration: none; color: black; padding: 5px">Додати відвідувача</a></button>
+
+<h2>Створити клубну картку</h2>
+<form th:action="@{/club-cards}" th:object="${newClubCard}" method="post">
+    <input type="hidden" id="id" name="id" th:value="${newClubCard.id}" />
+
+    <label for="customerId">*Відвідувач:</label>
+    <select id="customerId" name="customerId">
+        <option value="">--Виберіть--</option>
+        <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.id + '. ' + customer.lastName + ' ' + customer.firstName}"></option>
+    </select>
+    <br/><br/>
+
+    <label for="issueDate">*Дата створення</label>
+    <input type="text" th:field="${newClubCard.issueDate}" id="issueDate" placeholder="Дата створення">
+    <br/><br/>
+    <label for="expireDate">Дата закінчення</label>
+    <input type="text" th:field="${newClubCard.expireDate}" id="expireDate" placeholder="Дата закінчення">
+    <br/><br/>
+
+    <label for="attendanceModeId">*Режим відвідування:</label>
+    <select id="attendanceModeId" name="attendanceModeId">
+        <option value="">--Виберіть--</option>
+        <option th:each="mode : ${modes}" th:value="${mode.id}" th:text="${mode.name}"></option>
+    </select>
+    <br><br>
+
+    <div>*Послуги:</div>
+    <label>
+        <input type="checkbox" id="pool" name="pool">
+        Басейн
+    </label>
+    <br>
+    <label>
+        <input type="checkbox" id="fitness" name="fitness">
+        Фітнес зал
+    </label>
+    <br>
+    <label>
+        <input type="checkbox" id="gym" name="gym">
+        Спорт зал
+    </label>
+    <br>
+    <label>
+        <input type="checkbox" id="massage" name="massage">
+        Масаж
+    </label>
+    <br>
+    <label>
+        <input type="checkbox" name="sauna">
+        Сауна
+    </label>
+    <br><br>
+
+    <input type="submit" value="Створити клубну картку">
+</form>
+
+<h2>Список активних клубних карток</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Прізвище</th>
+        <th>Ім'я</th>
+        <th>Дата створення</th>
+        <th>Дата закінчення</th>
+        <th>Режим відвідування</th>
+        <th>Послуги</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="card : ${clubCards}">
+        <td th:text="${card.id}"></td>
+        <td th:text="${card.customer.lastName}"></td>
+        <td th:text="${card.customer.firstName}"></td>
+        <td th:text="${card.issueDate}"></td>
+        <td th:text="${card.expireDate}"></td>
+        <td th:text="${card.attendanceMode.name}"></td>
+        <td>
+            <div th:each="set : ${sets}" th:if="${set.clubCard.id == card.id}" th:text="${set.service.name}"></div></td>
+        <td><a th:href="@{club-card-update/{id}(id=${card.id})}">Edit</a></td>
+        <td><a th:href="@{club-card-delete/{id}(id=${card.id})}">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
+    <br/>
+</body>
+</html>

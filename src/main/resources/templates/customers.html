@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Menu</title>
+  <style>
+    th, td {
+      border: 1px solid green;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+<button style="font-size: 18px; margin:10px 0 0 10px"><a style="text-decoration: none; color: black; padding: 5px" th:href="@{/club-cards}">До клубних карт</a></button>
+<h2>Додати відвідувача у реєстр</h2>
+<form th:action="@{/customers}" th:object="${newCustomer}" method="post">
+  <label for="lastName">*Прізвище</label>
+  <input type="text" th:field="*{lastName}" id="lastName" placeholder="Прізвище"><br>
+  <span style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name error</span>
+  <br><br>
+  <label for="firstName">*Ім'я</label>
+  <input type="text" th:field="*{firstName}" id="firstName" placeholder="Ім'я"><br>
+  <span style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name error</span>
+  <br><br>
+  <label for="mode">Адреса</label>
+  <input type="text" th:field="*{address}" id="mode" placeholder="Адреса"><br>
+  <span style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address error</span>
+  <br><br>
+  <label for="email">*Email</label>
+  <input type="text" th:field="*{email}" id="email" placeholder="Email"><br>
+  <span style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</span>
+  <br><br>
+  <input type="submit" value="Додати відвідувача">
+</form>
+
+<h2>Список зареєстрованих відвідувачів</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Прізвище</th>
+    <th>Ім'я</th>
+    <th>Адреса</th>
+    <th>Email</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="cstmr : ${customers}">
+    <td th:text="${cstmr.id}"></td>
+    <td th:text="${cstmr.lastName}"></td>
+    <td th:text="${cstmr.firstName}"></td>
+    <td th:text="${cstmr.address}"></td>
+    <td th:text="${cstmr.email}"></td>
+    <td><a th:href="@{customer-update/{id}(id=${cstmr.id})}">Edit</a></td>
+    <td><a th:href="@{customer-delete/{id}(id=${cstmr.id})}">Delete</a></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
