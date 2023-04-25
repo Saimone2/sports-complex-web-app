@@ -22,7 +22,8 @@ public class CustomerService {
     private final AttendanceRepo attendanceRepo;
 
     @Autowired
-    public CustomerService(CustomerRepo customerRepo, ClubCardService clubCardService, MedicalExaminationRepo medicalExaminationRepo, AttendanceRepo attendanceRepo) {
+    public CustomerService(CustomerRepo customerRepo, ClubCardService clubCardService,
+                           MedicalExaminationRepo medicalExaminationRepo, AttendanceRepo attendanceRepo) {
         this.customerRepo = customerRepo;
         this.clubCardService = clubCardService;
         this.medicalExaminationRepo = medicalExaminationRepo;
@@ -58,17 +59,14 @@ public class CustomerService {
         for(ClubCard clubCard : clubCardList) {
             clubCardService.deleteClubCard(clubCard.getId());
         }
-
         List<MedicalExamination> medicalExaminationList = medicalExaminationRepo.findAllByCustomerId(id);
         for(MedicalExamination medicalExamination : medicalExaminationList) {
             medicalExaminationRepo.deleteById(medicalExamination.getId());
         }
-
         List<Attendance> attendanceList = attendanceRepo.findAllByCustomerId(id);
         for(Attendance attendance : attendanceList) {
             attendanceRepo.deleteById(attendance.getId());
         }
-
         customerRepo.delete(customer);
     }
 }

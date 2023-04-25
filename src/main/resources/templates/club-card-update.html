@@ -8,7 +8,7 @@
 <h2>Зміна інформації про клубну картку</h2>
 <form th:action="@{/club-card-update/{id}(id=${clubCard.id})}" th:object="${clubCard}" method="post">
     <label for="id">ID</label>
-    <input readonly type="number" th:field="${clubCard.id}" id="id" placeholder="ID">
+    <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
     <br/><br/>
 
     <label for="customerId">*Відвідувач:</label>
@@ -19,11 +19,12 @@
     <br/><br/>
 
     <label for="issueDate">*Дата створення</label>
-    <input type="text" th:field="${clubCard.issueDate}" id="issueDate" placeholder="Дата створення">
+    <input type="text" th:field="*{issueDate}" id="issueDate" placeholder="Дата створення">
+    <span style="color: red" th:if="${#fields.hasErrors('issueDate')}" th:errors="*{issueDate}">Issue date error</span>
     <br/><br/>
 
     <label for="expireDate">Дата закінчення</label>
-    <input type="text" th:field="${clubCard.expireDate}" id="expireDate" placeholder="Дата закінчення">
+    <input type="text" th:field="*{expireDate}" id="expireDate" placeholder="Дата закінчення">
     <br/><br/>
 
     <label for="attendanceModeId">*Режим відвідування:</label>

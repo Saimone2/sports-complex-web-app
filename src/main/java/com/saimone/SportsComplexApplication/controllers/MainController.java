@@ -87,9 +87,13 @@ public class MainController {
     }
 
     @PostMapping("/club-cards")
-    public String createClubCard(@ModelAttribute("customerId") Integer customerId, @ModelAttribute("attendanceModeId") Integer attendanceModeId,
-                                 @ModelAttribute("newClubCard") ClubCard clubCard, @ModelAttribute("pool") String pool, @ModelAttribute("fitness") String fitness,
+    public String createClubCard(@ModelAttribute("newClubCard") ClubCard clubCard, BindingResult bindingResult,
+                                 @ModelAttribute("customerId") Integer customerId, @ModelAttribute("attendanceModeId") Integer attendanceModeId,
+                                 @ModelAttribute("pool") String pool, @ModelAttribute("fitness") String fitness,
                                  @ModelAttribute("gym") String gym, @ModelAttribute("massage") String massage, @ModelAttribute("sauna") String sauna) {
+        if(bindingResult.hasErrors()) {
+            return "club-cards";
+        }
         List<Integer> services = createServiceList(pool, fitness, gym, massage, sauna);
         clubCardService.createClubCard(clubCard, customerId, attendanceModeId, services);
         return "redirect:/club-cards";
@@ -126,11 +130,13 @@ public class MainController {
     }
 
     @PostMapping("/club-card-update/{id}")
-    public String updateClubCard(@PathVariable("id") Integer id, @ModelAttribute("customerId") Integer customerId,
-                                 @ModelAttribute("attendanceModeId") Integer attendanceModeId, @ModelAttribute("clubCard") ClubCard clubCard,
+    public String updateClubCard(@ModelAttribute("clubCard") ClubCard clubCard, BindingResult bindingResult, @PathVariable("id") Integer id,
+                                 @ModelAttribute("customerId") Integer customerId, @ModelAttribute("attendanceModeId") Integer attendanceModeId,
                                  @ModelAttribute("pool") String pool, @ModelAttribute("fitness") String fitness,
                                  @ModelAttribute("gym") String gym, @ModelAttribute("massage") String massage, @ModelAttribute("sauna") String sauna) {
-
+        if(bindingResult.hasErrors()) {
+            return "club-card-update";
+        }
         List<Integer> services = createServiceList(pool, fitness, gym, massage, sauna);
         clubCardService.updateClubCard(id, clubCard, customerId, attendanceModeId, services);
         return "redirect:/club-cards";
