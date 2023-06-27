@@ -1,4 +1,4 @@
-# SportsComplexApplication
+# sports-complex-web-app
 Spring Boot application that contains web pages for managing customer registration and displaying a list of registered customers. Also, on the basis of clients, you can register club cards and enable the visiting mode and the services used.
 
 The website is built on the Spring MVC framework. The Spring JPA module was used to connect to the MySQL database. Tomcat was used for the servlet containers and the local server. The application uses the Thymeleaf server-side Java templating engine, which enables dynamic content and data binding.
